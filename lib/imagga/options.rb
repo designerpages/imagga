@@ -25,10 +25,31 @@ module Imagga
     end
   end
 
+  class ExtractWithCategoryCommandOptions < BaseOptions
+    def options(opts={})
+      opts.merge!(base_options).merge!(method: method)
+      opts.merge!(build_boolean_options(opts, boolean_fields))
+      opts.merge!(sig: sign(opts))
+    end
+
+    def method
+      'imagga.colorsearch.extract'
+    end
+
+    def boolean_fields
+      #[:extract_overall_colors, :extract_object_colors, :apply_color_threshold, :classify_with_threshold]
+      [:extract_overall_colors, :extract_object_colors]
+    end
+  end
+
+
   class ExtractOptions < BaseOptions
     def options(opts={})
       opts.merge!(base_options).merge!(method: method)
       opts.merge!(build_boolean_options(opts, boolean_fields))
+
+pp opts
+
       opts.merge!(sig: sign(opts))
     end
 

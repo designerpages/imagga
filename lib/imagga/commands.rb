@@ -31,6 +31,11 @@ module Imagga
     def options_class; ExtractOptions; end
   end
 
+  class ExtractWithCategoryCommand < BaseCommand
+    def service_path; '/colorsearchserver.php'; end
+    def options_class; ExtractWithCategoryCommandOptions; end
+  end
+
   class RankCommand < ExtractCommand
     def options_class; RankOptions; end
   end
