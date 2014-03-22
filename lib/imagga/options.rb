@@ -17,11 +17,14 @@ module Imagga
       sorted_options_string = options.keys.sort.map do |key|
         "%s=%s" % [key.to_s, options[key]]
       end.join('') << api_secret
+      puts "~~~~~~~~~~~~~~~~~~~~~"
+      pp sorted_options_string
+      puts "~~~~~~~~~~~~~~~~~~~~~"
       Digest::MD5.hexdigest(sorted_options_string)
     end
 
     def options(opts={})
-      {}
+      opts
     end
   end
 
@@ -47,8 +50,14 @@ module Imagga
     def options(opts={})
       opts.merge!(base_options).merge!(method: method)
       opts.merge!(build_boolean_options(opts, boolean_fields))
-
 pp opts
+puts "-----"
+pp boolean_fields
+puts "-----"
+pp base_options
+puts "-----"
+pp build_boolean_options(opts, boolean_fields)
+puts "=================================="
 
       opts.merge!(sig: sign(opts))
     end

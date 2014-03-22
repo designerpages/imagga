@@ -5,6 +5,11 @@ module Imagga
       ExtractResultBuilder.new.build_from(super(options))
     end
 
+    def extract_with_category_command(urls_or_images, options={})
+      options.merge!(ImageOrUrlParametizer.new.parametrize(urls_or_images))
+      ExtractResultBuilder.new.build_from(super(options))
+    end
+
     def rank(options={})
       colors = options.delete(:colors) { raise_missing('colors') }
       options.merge!(RankColorParametizer.new.parametrize(colors))

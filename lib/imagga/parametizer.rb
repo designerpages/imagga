@@ -7,6 +7,14 @@ module Imagga
     end
 
     def build_boolean_options(options, keys)
+      debugger
+      puts "-=-==-=--==-=-="
+      puts "options"
+      pp options
+      puts "-=-==-=--==-=-="
+      puts "keys"
+      pp keys
+      puts "-=-==-=--==-=-="
       [keys].flatten.inject({}) do |result, key|
         if options.keys.include?(key) && (value = [true, '1', 1].include?(options[key])  ? 1 : 0)
           result[key] = value
