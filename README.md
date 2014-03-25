@@ -5,23 +5,25 @@
 
 Client for Imagga image analytics services API
 
+### Note: images MUST be passed in as http and NOT https
+
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'imagga'
+    gem 'imagga', :git => 'git://github.com/designerpages/imagga.git', :branch => 'master' #client for imagga services like color extraction and categorization
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
-Or install it yourself as:
+To install the original (NON-FORKED) verision one may do yourself as:
 
     $ gem install imagga
 
 ## Usage
 
-Set up a client
+Oringally to set up a client one did
 
     client = Imagga::Client.new(
       base_uri:   '0.0.0.0',                # IP of the Imagga server
@@ -29,9 +31,40 @@ Set up a client
       api_secret: '1234567890123456789'     # Your api secret
     )
 
+but in the dp20 repository Rob added an initlizer named imagga with the following
+
+    IMAGGA_API_KEY = '12345678'
+    IMAGGA_API_SECRET = '1234567890123456789'
+    IMAGGA_API_SERVER_IP = '0.0.0.0'
+    
+    #overwriting the core client with the proper values hardcoded inside
+    module Imagga
+      class CoreClient
+        def initialize(opts={})
+          @api_key     = IMAGGA_API_KEY
+          @api_secret  = IMAGGA_API_SECRET 
+          @base_uri    = IMAGGA_API_SERVER_IP
+        end
+      end
+    end
+
+by doing this when one does `client = Imagga::Client.new` they get back a client with the proper credentials already supplied
+
+
 Extract image information
 
-    results = client.extract('http://imagga.com/images/scheme_colors.png')
+    results = client.extract('http://designerpages.s3.amazonaws.com/assets/33815872/137198173.jpg')
+
+Extract image information with category information
+
+    results = client.extract_with_category('http://designerpages.s3.amazonaws.com/assets/33815872/137198173.jpg')
+
+default paramets for category extraction is `{ :extract_overall_colors => 1, :extract_object_colors =>0, :apply_color_threshold => 1, :classify_with_threshold => 99.61 `
+
+example with
+    #take first 5 images of first carpet product
+    DPCategory.find(412).products.first.images.collect do |i| i.filename.to_s.gsub("https","http").gsub("-dev","") end.slice(0,4)
+
 
 
 Extract image information with indexing and extraction options:
