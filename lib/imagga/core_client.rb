@@ -13,6 +13,10 @@ module Imagga
       ExtractCommand.new(api_key, api_secret, base_uri).execute(options)
     end
 
+    def extract_with_category(options={})
+      ExtractCommand.new(api_key, api_secret, base_uri).execute(options)
+    end    
+
     def rank(options={})
       RankCommand.new(api_key, api_secret, base_uri).execute(options)
     end

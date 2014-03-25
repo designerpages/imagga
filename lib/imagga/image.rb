@@ -19,7 +19,7 @@ module Imagga
 
   class ImageInfo < ImageInfoBase
     def self.fields
-      %w(url object_percentage color_variance image_packed foreground_packed background_packed)
+      %w(url object_percentage color_variance image_packed foreground_packed background_packed category)
     end
 
     def self.color_fields
