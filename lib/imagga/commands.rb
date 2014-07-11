@@ -14,7 +14,9 @@ module Imagga
     end
 
     def execute(options)
-      JSON.parse(self.class.post(service_path, body: args(options))).tap do |result|
+      #made json_response two lines so it is easier to debug calls the imagga service. when needed store a hard coded respose for testing
+      json_response = self.class.post(service_path, body: args(options))
+      JSON.parse(json_response).tap do |result|
         raise_if_request_failed!(result)
       end
     end
