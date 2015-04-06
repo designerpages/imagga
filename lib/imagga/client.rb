@@ -6,7 +6,13 @@ module Imagga
     end
 
     #using a low threshold so we always see the results
-    def extract_with_category(urls_or_images, options={:extract_overall_colors => 1, :extract_object_colors =>0, :apply_color_threshold => 1, :classify_with_threshold => 9.6 })
+    def extract_with_category(urls_or_images,options={})
+      #set the values for the hash if they are blank
+      options[:extract_overall_colors] ||= 1
+      options[:extract_object_colors] ||= 0
+      options[:apply_color_threshold] ||= 1
+      options[:classify_with_threshold] ||= 1
+
       raise "When applying classifier options[:dp_category] can not be blank ie {:dp_category => carpet}" if options[:dp_category].blank?
       options.merge!(ImageOrUrlParametizer.new.parametrize(urls_or_images))
       ExtractResultBuilder.new.build_from(super(options))
