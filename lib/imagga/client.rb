@@ -5,7 +5,7 @@ module Imagga
       ExtractResultBuilder.new.build_from(super(options))
     end
 
-    def extract_with_category(urls_or_images, options={:extract_overall_colors => 1, :extract_object_colors =>0, :apply_color_threshold => 1, :classify_with_threshold => 99.6})
+    def extract_with_category(urls_or_images, options={:extract_overall_colors => 1, :extract_object_colors =>0, :apply_color_threshold => 1, :classify_with_threshold => 9.6})
       options.merge!(ImageOrUrlParametizer.new.parametrize(urls_or_images))
       ExtractResultBuilder.new.build_from(super(options))
     end
